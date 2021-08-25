@@ -52,12 +52,6 @@ void collision::getCoordinates(double *ptc)
    ptc[3] = _ptc[3];
 }
 
-// setters
-void collision::ImportKinem(TString path)
-{
-
-}
-
 void collision::getDir(particle *dir)
 {
    double phi   = 2. * TMath::Pi() * gRandom->Rndm();

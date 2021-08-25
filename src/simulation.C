@@ -1,18 +1,20 @@
-// @(#)root/simulation
-// Author: Alberto Perro 15/11/19
-
 /* COLLIDER EVENT MONTECARLO SIMULATION
  *  Generating particles collisions and intersecting with two
  *  layers of vertex detectors and saving hits to file
  */
+
+ // c++ standard libraries
 #include <iostream>
 #include <iomanip>
-//#include <Riostream.h>
+
+// ROOT libraries
 #include "TClonesArray.h"
 #include "TStopwatch.h"
 #include "TFile.h"
 #include "TTree.h"
 #include "TMath.h"
+
+// custum classes
 #include "lib/detector.h"
 #include "lib/collision.h"
 #include "lib/hit.h"
@@ -23,16 +25,14 @@
 
 void simulation(bool multScat = false, int randomNoise = 0)
 {
-   // if(multScat)printf("MULTIPLE SCATTERING ENABLED!\n");
-   int        debug = 4;
+   //int        debug = 4;
    TStopwatch watch;
    // creating TTree for simulation
    TFile *simulation = new TFile("simulation.root", "RECREATE");
    TTree *hitTree    = new TTree("hits", "Hits tree");
 
-   if (debug > 0) printf("instantiating detector class\n");
    detector *det = new detector();
-   if (debug > 0) printf("instantiating collision class\n");
+
    collision *vtx = new collision();
    double     ptc[4]; // vertex coordinates array
    // instantiating TClonesArrays to store hits
@@ -46,7 +46,6 @@ void simulation(bool multScat = false, int randomNoise = 0)
    hitTree->Branch("L2hit", &hitsL2);
    //----------------------------- MONTECARLO ---------------------------
    for (int i = 0; i < N_EVENTS; i++) {
-      //if (debug > 3) printf("\ngenerating Collision %d\n", i);
       vtx->generateCollision(GAUSSIAN);
       vtx->getCoordinates(ptc);
       //if (debug > 2) printf("\rx: %f\t y: %f\t z: %f\t m: %f \n", ptc[0], ptc[1], ptc[2], ptc[3]);
