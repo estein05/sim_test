@@ -44,6 +44,8 @@ void simulation(bool multScat = false, int randomNoise = 0)
    hitTree->Branch("Vertex", &ptc[0], "x0/D:y0:z0:m");
    hitTree->Branch("L1hit", &hitsL1);
    hitTree->Branch("L2hit", &hitsL2);
+
+   
    //----------------------------- MONTECARLO ---------------------------
    for (int i = 0; i < N_EVENTS; i++) {
       vtx->generateCollision(GAUSSIAN);
@@ -90,6 +92,9 @@ void simulation(bool multScat = false, int randomNoise = 0)
       }
    }
    std::cout << "\nmontecarlo finished" << std::endl;
+   //----------------------------- END MONTECARLO ---------------------------
+
+
    // saving simulation file
    simulation->Write("", TObject::kOverwrite);
    simulation->Close();
