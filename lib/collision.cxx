@@ -1,6 +1,3 @@
-// @(#)root/simulationclass
-// Author: Alberto Perro 15/11/19
-
 #include <Riostream.h>
 #include "collision.h"
 #include "TRandom3.h"
