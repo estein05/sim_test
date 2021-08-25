@@ -47,7 +47,7 @@ void collision::getCoordinates(double *ptc)
 void collision::getDir(particle *dir)
 {
    double phi   = 2. * TMath::Pi() * gRandom->Rndm();
-   double theta = 2. * TMath::ATan(TMath::Exp(-(gRandom->Gaus(0, 3))));
+   double theta = 2. * TMath::ATan(TMath::Exp(-(gRandom->Gaus(-1, 2))));
    dir->setTheta(theta);
    dir->setPhi(phi);
 }

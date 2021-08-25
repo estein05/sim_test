@@ -19,6 +19,15 @@
 #include "lib/collision.h"
 #include "lib/hit.h"
 
+#define R_INNER1_DET 23.0
+#define W_INNER1_DET 120.0
+
+#define R_INNER2_DET 29.0
+#define W_INNER2_DET 120.0
+
+#define R_OUTER1_DET 70.0
+#define W_OUTER1_DET 360.0
+
 #ifndef N_EVENTS
 #define N_EVENTS 1e6
 #endif
@@ -45,7 +54,7 @@ void simulation(bool multScat = false, int randomNoise = 0)
    hitTree->Branch("L1hit", &hitsL1);
    hitTree->Branch("L2hit", &hitsL2);
 
-   
+
    //----------------------------- MONTECARLO ---------------------------
    for (int i = 0; i < N_EVENTS; i++) {
       vtx->generateCollision(GAUSSIAN);
@@ -57,14 +66,14 @@ void simulation(bool multScat = false, int randomNoise = 0)
       for (uint8_t mult = 0; mult < ptc[3]; mult++) {
          vtx->getDir(part); // update the direction
          double beampt[3];  // hit coordinates in cartesian
-         det->intersect(ptc, part, beampt, 1000., 30.0, 0, 0, multScat, 0.008);
+         det->intersect(ptc, part, beampt, W_INNER1_DET, R_INNER1_DET, 0, 0, multScat, 0.008);
          double l1pt[3];
-         hit *  l1hit = det->intersect(beampt, part, l1pt, 270., 40., 0.012, 0.003, multScat, 0.008);
+         hit *  l1hit = det->intersect(beampt, part, l1pt, W_INNER2_DET, R_INNER2_DET, 0.012, 0.003, multScat, 0.008);
          if (l1hit != NULL) {
             L1HITS[L1++] = l1hit;
          }
          double l2pt[3];
-         hit *  l2hit = det->intersect(l1pt, part, l2pt, 270., 70., 0.012, 0.003, false, 0);
+         hit *  l2hit = det->intersect(l1pt, part, l2pt, W_OUTER1_DET, R_OUTER1_DET, 0.012, 0.003, false, 0);
          if (l2hit != NULL) {
             L2HITS[L2++] = l2hit;
          }
