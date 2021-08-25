@@ -1,6 +1,3 @@
-// @(#)root/reconstruction
-// Author: Alberto Perro 15/11/19
-
 #include "lib/detector.h"
 #include "lib/collision.h"
 #include "lib/hit.h"
