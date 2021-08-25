@@ -36,6 +36,8 @@ private:
    double _sx = 0.1;
    double _sy = 0.1;
    double _sz = 53.0;
+   double _mmDist = 20;
+   double _smDist = 1;
    // kinematic file
    TH1F * _distMult;
    TH1F * _distEta;

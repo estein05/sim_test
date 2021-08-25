@@ -8,17 +8,10 @@
 
 ClassImp(collision)
 
-   collision::collision()
-   : TObject()
-{
-}
-
+collision::collision() : TObject() {}
 collision::collision(const collision &source) : TObject(source) {}
 
-collision::~collision()
-{
-
-}
+collision::~collision() {} // Deconstructor
 
 collision &collision::operator=(const collision &source)
 {
@@ -30,15 +23,14 @@ collision &collision::operator=(const collision &source)
 void collision::generateCollision(const uint8_t distType)
 {
    // generate coordinates
-   _ptc[0]       = gRandom->Gaus(_mx, _sx);
-   _ptc[1]       = gRandom->Gaus(_my, _sy);
-   _ptc[2]       = gRandom->Gaus(_mz, _sz);
+   _ptc[0]       = gRandom->Gaus(_mx, _sx); // x
+   _ptc[1]       = gRandom->Gaus(_my, _sy); // y
+   _ptc[2]       = gRandom->Gaus(_mz, _sz); // z
    uint16_t mult = 0;
    switch (distType) {
-   case KINEMATIC: mult = _distMult->GetRandom(); break;
    case FIXED: mult = 25; break;
    case UNIFORM: mult = (uint16_t)(1 + 49 * gRandom->Rndm()); break;
-   case GAUSSIAN: mult = gRandom->Gaus(20, 2); break;
+   case GAUSSIAN: mult = gRandom->Gaus(_mmDist, _smDist); break;
    }
    _ptc[3] = mult;
 }

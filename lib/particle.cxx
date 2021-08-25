@@ -1,7 +1,3 @@
-// @(#)root/simulationclass
-// Author: Alberto Perro 15/11/19
-
-#include <Riostream.h>
 #include "particle.h"
 
 ClassImp(particle)

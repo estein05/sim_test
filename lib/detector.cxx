@@ -1,6 +1,3 @@
-// @(#)root/simulationclass
-// Author: Alberto Perro 15/11/19
-
 #include <Riostream.h>
 #include "detector.h"
 #include "TRandom3.h"
@@ -24,25 +21,30 @@ hit *detector::intersect(double *ptc, particle *part, double *new_pt, double wid
    double   theta   = part->getTheta(); // beam axis angle
    double   phi     = part->getPhi();   // anomaly
    if (theta > TMath::Pi()) theta = theta - TMath::Pi();
-   double c1    = TMath::Sin(theta) * TMath::Cos(phi);
-   double c2    = TMath::Sin(theta) * TMath::Sin(phi);
-   double c3    = TMath::Cos(theta);
-   double a     = ptc[0] * c1 + ptc[1] * c2;
-   double b     = c1 * c1 + c2 * c2;
+   // directions: x,y,z
+   double x_direction    = TMath::Sin(theta) * TMath::Cos(phi);
+   double y_direction    = TMath::Sin(theta) * TMath::Sin(phi);
+   double z_direction    = TMath::Cos(theta);
+   //
+   double a     = ptc[0] * x_direction + ptc[1] * y_direction;
+   double b     = x_direction * x_direction + y_direction * y_direction;
    double c     = ptc[0] * ptc[0] + ptc[1] * ptc[1] - radius * radius;
+
+   // Abstand Kollision zu Detektorwänden in Richtung part->getDir
    double delta = a * a - (b * c);
+
    double t;
-   double t_temp = -((ptc[0] * c1 + ptc[1] * c2) + TMath::Sqrt(delta)) / b;
+   double t_temp = -( a + TMath::Sqrt(delta) ) / b;
    if (t_temp > 0) {
       t = t_temp;
    } else {
-      t = -((ptc[0] * c1 + ptc[1] * c2) - TMath::Sqrt(delta)) / b;
+      t = -((ptc[0] * x_direction + ptc[1] * y_direction) - TMath::Sqrt(delta)) / b;
    }
-   double z = ptc[2] + c3 * t;
+   double z = ptc[2] + z_direction * t;
    double rho;
    if (z <= width / 2. && z >= -width / 2) {
-      double x = ptc[0] + c1 * t;
-      double y = ptc[1] + c2 * t;
+      double x = ptc[0] + x_direction * t;
+      double y = ptc[1] + y_direction * t;
 
       if (x > 0 && y > 0) {
          rho = TMath::ATan(y / x); //ok
