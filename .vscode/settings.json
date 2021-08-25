@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "reconstruction.C": "cpp"
+        "reconstruction.C": "cpp",
+        "simulation.C": "cpp",
+        "polar_cut.C": "cpp"
     }
 }
