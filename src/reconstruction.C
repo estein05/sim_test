@@ -30,10 +30,10 @@ int reconstruction(TString fileName = "simulation.root", uint32_t nevents = 0, c
    TFile *sourceFile = new TFile(fileName);
    if (!sourceFile) return 1;
    // histogram and canvas declarations
-   TCanvas *     cResAll = new TCanvas("cResAll", "Risoluzione", 10, 10, 1200, 800);
-   TH1I *        hResAll = new TH1I("hResAll", "Risoluzione inclusva;Z [mm];#eventi", 200, -2, 2);
+   TCanvas *     cResAll = new TCanvas("cResAll", "Resolution", 10, 10, 1200, 800);
+   TH1I *        hResAll = new TH1I("hResAll", "Resolution inclusive;Z [mm];#events", 200, -2, 2);
    double        sigmaZ[13], ssigmaZ[13], xZ[13], sxZ[13];
-   TCanvas *     cResVsZtrue = new TCanvas("cResVsZtrue", "Risoluzione vs Z", 10, 10, 1200, 800);
+   TCanvas *     cResVsZtrue = new TCanvas("cResVsZtrue", "Resolution vs Z", 10, 10, 1200, 800);
    TGraphErrors *hResVsZtrue;
    TH1I *        hdZ[13];
    for (uint8_t i = 0; i < 13; i++) {
@@ -42,7 +42,7 @@ int reconstruction(TString fileName = "simulation.root", uint32_t nevents = 0, c
       sxZ[i] = 15;
    }
    double        sigmaMult[14], ssigmaMult[14], xMult[14], sxMult[14];
-   TCanvas *     cResVsMult = new TCanvas("cResVsMult", "Risoluzione vs Mult", 10, 10, 1200, 800);
+   TCanvas *     cResVsMult = new TCanvas("cResVsMult", "Resolution vs Mult", 10, 10, 1200, 800);
    TGraphErrors *hResVsMult;
    TH1I *        hdMult[14];
    for (uint8_t i = 0; i < 14; i++) {
@@ -52,18 +52,18 @@ int reconstruction(TString fileName = "simulation.root", uint32_t nevents = 0, c
    }
    TCanvas *          cEffVsMult = new TCanvas("cEffVsMult", "Efficiency vs Multiplicity", 10, 10, 1200, 800);
    TGraphAsymmErrors *hEffVsMult;
-   TH1I *             hHitVsMult      = new TH1I("hHitVsMult", "Totali;Molteplicita';# eventi", 20, 0, 50);
-   TH1I *             hHitReconVsMult = new TH1I("hHitReconVsMult", "Ricostruiti;Molteplicita';# eventi", 20, 0, 50);
+   TH1I *             hHitVsMult      = new TH1I("hHitVsMult", "Total;Multiplicity';#events", 20, 0, 50);
+   TH1I *             hHitReconVsMult = new TH1I("hHitReconVsMult", "Reconstructed;Multiplicity';#events", 20, 0, 50);
 
-   TCanvas *          cEffVsMult1S = new TCanvas("cEffVsMult1S", "Efficienza (entro 1 sigma)", 10, 10, 1200, 800);
+   TCanvas *          cEffVsMult1S = new TCanvas("cEffVsMult1S", "Efficiency (within 1 sigma)", 10, 10, 1200, 800);
    TGraphAsymmErrors *hEffVsMult1S;
-   TH1I *             hHitVsMult1S = new TH1I("hHitVsMult1S", "Totali;Molteplicita';# eventi", 20, 0, 50);
-   TH1I *hHitReconVsMult1S         = new TH1I("hHitReconVsMult1S", "Ricostruiti;Molteplicita';# eventi", 20, 0, 50);
+   TH1I *             hHitVsMult1S = new TH1I("hHitVsMult1S", "Totali;Multiplicity';#events", 20, 0, 50);
+   TH1I *hHitReconVsMult1S         = new TH1I("hHitReconVsMult1S", "Reconstructed;Multiplicity';#events", 20, 0, 50);
 
    TCanvas *          cEffVsZ = new TCanvas("cEffVsZ", "cEffVsZ", 10, 10, 1200, 800);
    TGraphAsymmErrors *hEffVsZ;
-   TH1I *             hHitVsZ      = new TH1I("hHitVsZ", "Totali;Z;# eventi", 13, -195, 195);
-   TH1I *             hHitReconVsZ = new TH1I("hHitReconVsZ", "Ricostruiti;Z;# eventi", 13, -195, 195);
+   TH1I *             hHitVsZ      = new TH1I("hHitVsZ", "Totali;Z;#events", 13, -195, 195);
+   TH1I *             hHitReconVsZ = new TH1I("hHitReconVsZ", "Reconstructed;Z;#events", 13, -195, 195);
    // getting simulation data from TTree
    TTree *tree = (TTree *)(sourceFile->Get("hits"));
    if (!tree) return 2;
@@ -124,7 +124,7 @@ int reconstruction(TString fileName = "simulation.root", uint32_t nevents = 0, c
    }
    cResVsZtrue->cd();
    hResVsZtrue = new TGraphErrors(13, xZ, sigmaZ, sxZ, ssigmaZ);
-   hResVsZtrue->SetTitle("Risoluzione vs Z;Z [mm];Risoluzione [mm]");
+   hResVsZtrue->SetTitle("Resolution vs Z;Z [mm];Resolution [mm]");
    hResVsZtrue->SetMinimum(0);
    hResVsZtrue->Draw();
 
@@ -134,24 +134,24 @@ int reconstruction(TString fileName = "simulation.root", uint32_t nevents = 0, c
    }
    cResVsMult->cd();
    hResVsMult = new TGraphErrors(13, xMult, sigmaMult, sxMult, ssigmaMult);
-   hResVsMult->SetTitle("Risoluzione vs Molteplicita';Molteplicita' ;Risoluzione [mm]");
+   hResVsMult->SetTitle("Resolution vs Multiplicity';Multiplicity' ;Resolution [mm]");
    hResVsMult->SetMinimum(0);
    hResVsMult->Draw();
    cResAll->cd();
    hResAll->Draw();
    cEffVsMult->cd();
    hEffVsMult = new TGraphAsymmErrors(hHitReconVsMult, hHitVsMult);
-   hEffVsMult->SetTitle("Efficienza;Molteplicita';Ricostruiti/Totali");
+   hEffVsMult->SetTitle("Efficiency;Multiplicity';Reconstructed/Total");
    hEffVsMult->SetMinimum(0);
    hEffVsMult->Draw();
    cEffVsMult1S->cd();
    hEffVsMult1S = new TGraphAsymmErrors(hHitReconVsMult1S, hHitVsMult1S);
-   hEffVsMult1S->SetTitle("Efficienza;Molteplicita' 1 sigma;Ricostruiti/Totali");
+   hEffVsMult1S->SetTitle("Efficiency;Multiplicity' 1 sigma;Reconstructed/Total");
    hEffVsMult1S->SetMinimum(0);
    hEffVsMult1S->Draw();
    cEffVsZ->cd();
    hEffVsZ = new TGraphAsymmErrors(hHitReconVsZ, hHitVsZ);
-   hEffVsZ->SetTitle("Efficienza;Z (mm);Ricostruiti/Totali");
+   hEffVsZ->SetTitle("Efficiency;Z (mm);Reconstructed/Total");
    hEffVsZ->SetMinimum(0);
    hEffVsZ->Draw();
    return 0;
