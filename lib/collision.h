@@ -1,6 +1,3 @@
-// @(#)root/simulationclass
-// Author: Alberto Perro 15/11/19
-
 #ifndef collision_H
 #define collision_H
 
@@ -27,7 +24,6 @@ public:
    void getCoordinates(double *ptc); // get generated vertex
    void getDir(particle *dir);    // particle direction generator
   // setters
-   void ImportKinem(TString path); // import kinematic file
    ClassDef(collision, 1)
 
 private:
@@ -43,7 +39,6 @@ private:
    // kinematic file
    TH1F * _distMult;
    TH1F * _distEta;
-   TFile *_kinemFile;
 };
 
 #endif

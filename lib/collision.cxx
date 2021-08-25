@@ -13,7 +13,7 @@ ClassImp(collision)
 {
 }
 
-collision::collision(const collision &source) : TObject(source), _kinemFile(source._kinemFile) {}
+collision::collision(const collision &source) : TObject(source) {}
 
 collision::~collision()
 {
