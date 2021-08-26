@@ -73,8 +73,9 @@ void polar_cut(int Event){
     CPol->cd();
 
 
+    Double_t r_0 = TMath::Sqrt(ptc[0]*ptc[0] + ptc[1]*ptc[1]);
     Double_t theta[] = {0, 0.1, 0.2,0.5};
-    Double_t radius[] = {0, 23, 29, 70};
+    Double_t radius[] = {r_0, 23, 29, 70};
     // Double_t z[] = {0, 50, 60, 100};
 
 
