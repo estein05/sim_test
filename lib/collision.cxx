@@ -28,7 +28,7 @@ void collision::generateCollision(const uint8_t distType)
    _ptc[2]       = gRandom->Gaus(_mz, _sz); // z
    uint16_t mult = 0;
    switch (distType) {
-   case FIXED: mult = 25; break;
+   case FIXED: mult = 1; break;
    case UNIFORM: mult = (uint16_t)(1 + 49 * gRandom->Rndm()); break;
    case GAUSSIAN: mult = gRandom->Gaus(_mmDist, _smDist); break;
    }

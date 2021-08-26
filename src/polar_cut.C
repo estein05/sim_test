@@ -1,9 +1,9 @@
 #include <Riostream.h>
 
-#include "../lib/detector.h"
-#include "../lib/collision.h"
-#include "../lib/hit.h"
-#include "../lib/tracklet.h"
+#include "lib/detector.h"
+#include "lib/collision.h"
+#include "lib/hit.h"
+#include "lib/tracklet.h"
 
 #include "TClonesArray.h"
 #include "TStopwatch.h"
@@ -12,12 +12,9 @@
 #include "TFile.h"
 #include "TTree.h"
 #include "TString.h"
-#include "TGraphAsymmErrors.h"
-#include "TGraphErrors.h"
 #include <vector>
 #include "TEllipse.h"
 #include "TGraphPolar.h"
-
 
 
 #define R_INNER1_DET 23.0
@@ -29,7 +26,7 @@
 #define R_OUTER1_DET 70.0
 #define W_OUTER1_DET 360.0
 
-void polar_cut(){
+void polar_cut(int Event){
     TFile *sourceFile = new TFile("simulation.root", "READ");
     TTree *tree = (TTree *)(sourceFile->Get("hits"));
     if (!tree) return;
@@ -44,12 +41,32 @@ void polar_cut(){
     uint32_t   nEntries = tree->GetEntries();
     std::cout << nEntries << '\n';
 
-    tree->GetEvent(1);
+    tree->GetEvent(Event);
 
     std::cout << "Vertex: " << ptc[0]
               << " " << ptc[1]
               << " " << ptc[2]
-              << " " << ptc[3];
+              << " " << ptc[3] << std::endl;
+
+    TIter     l1iterator(hitsL1);
+    TIter     l2iterator(hitsL2);
+    hit *     hitL1;
+    hit *     hitL2;
+
+    l1iterator.Reset();
+    l2iterator.Reset();
+    while ((hitL1 = (hit *)l1iterator.Next())) {
+      std::cout << "Theta L1: " << hitL1->getTheta() <<'\n';
+       while ((hitL2 = (hit *)l2iterator.Next())) {
+         std::cout << "Theta L2: " << hitL2->getTheta() <<'\n';
+       }
+       l2iterator.Reset();
+    }
+
+
+
+
+
 
     TCanvas * CPol = new TCanvas("CPol","TGraphPolar Example",1000,1000);
 
