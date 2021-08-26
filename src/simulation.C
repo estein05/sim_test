@@ -57,7 +57,7 @@ void simulation(bool multScat = false, int randomNoise = 0)
 
    //----------------------------- MONTECARLO ---------------------------
    for (int i = 0; i < N_EVENTS; i++) {
-      vtx->generateCollision(FIXED);
+      vtx->generateCollision(GAUSSIAN);
       vtx->getCoordinates(ptc);
       //if (debug > 2) printf("\rx: %f\t y: %f\t z: %f\t m: %f \n", ptc[0], ptc[1], ptc[2], ptc[3]);
       // generating particles with a given multiplicity distribution

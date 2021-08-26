@@ -33,11 +33,11 @@ private:
    double _mx = 0.;
    double _my = 0.;
    double _mz = 0.;
-   double _sx = 0.1;
-   double _sy = 0.1;
+   double _sx = 1;
+   double _sy = 1;
    double _sz = 53.0;
    double _mmDist = 20;
-   double _smDist = 1;
+   double _smDist = 2;
    // kinematic file
    TH1F * _distMult;
    TH1F * _distEta;
