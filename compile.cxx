@@ -16,5 +16,7 @@ void compile_simulation(){
   gSystem->CompileMacro("lib/tracklet.cxx","kg");
   gSystem->CompileMacro("src/simulation.C","kg");
   gSystem->CompileMacro("src/reconstruction.C","kg");
+	// -TEST-
+	gSystem->CompileMacro("src/polar_cut.C", "kg");
   printf("done!\n");
 }

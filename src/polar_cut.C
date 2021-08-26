@@ -1,3 +1,25 @@
+#include <Riostream.h>
+
+#include "../lib/detector.h"
+#include "../lib/collision.h"
+#include "../lib/hit.h"
+#include "../lib/tracklet.h"
+
+#include "TClonesArray.h"
+#include "TStopwatch.h"
+#include "TObject.h"
+#include "TCanvas.h"
+#include "TFile.h"
+#include "TTree.h"
+#include "TString.h"
+#include "TGraphAsymmErrors.h"
+#include "TGraphErrors.h"
+#include <vector>
+#include "TEllipse.h"
+#include "TGraphPolar.h"
+
+
+
 #define R_INNER1_DET 23.0
 #define W_INNER1_DET 120.0
 
@@ -8,13 +30,35 @@
 #define W_OUTER1_DET 360.0
 
 void polar_cut(){
+    TFile *sourceFile = new TFile("simulation.root", "READ");
+    TTree *tree = (TTree *)(sourceFile->Get("hits"));
+    if (!tree) return;
+    TClonesArray *hitsL1 = new TClonesArray("hit", 100);
+    TClonesArray *hitsL2 = new TClonesArray("hit", 100);
+    double        ptc[4];
+    tree->GetBranch("Vertex")->SetAddress(&ptc[0]);
+    tree->GetBranch("L1hit")->SetAddress(&hitsL1);
+    tree->GetBranch("L2hit")->SetAddress(&hitsL2);
+    tree->SetBranchStatus("*", 1); // Activates reading of all branches
+    TStopwatch watch;
+    uint32_t   nEntries = tree->GetEntries();
+    std::cout << nEntries << '\n';
+
+    tree->GetEvent(1);
+
+    std::cout << "Vertex: " << ptc[0]
+              << " " << ptc[1]
+              << " " << ptc[2]
+              << " " << ptc[3];
+
     TCanvas * CPol = new TCanvas("CPol","TGraphPolar Example",1000,1000);
 
     CPol->cd();
 
-    Double_t theta[] = {0, 0.1,0.2,0.5};
+
+    Double_t theta[] = {0, 0.1, 0.2,0.5};
     Double_t radius[] = {0, 23, 29, 70};
-    Double_t z[] = {0, 50, 60, 100};
+    // Double_t z[] = {0, 50, 60, 100};
 
 
 
