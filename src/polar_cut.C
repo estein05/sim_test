@@ -80,7 +80,7 @@ void polar_cut(int Event){
        while ((hitL2 = (hit *)l2iterator.Next())) {
          thetal2[j] = hitL2->getTheta();
          z2[j] = hitL2->getZ();
-         if (hitL1->deltaTheta(hitL1, hitL2) < 0.1) {
+         if (hitL1->deltaTheta(hitL1, hitL2) < 0.15) {
            r2[j] = i;
          }
          else {
@@ -122,13 +122,16 @@ void polar_cut(int Event){
 
     //Draw detector layers
     TEllipse *c1 = new TEllipse(0,0, 0.70, 0.70);
-    c1->SetLineColor(kRed+3);
+    c1->SetLineColor(kGreen+2);
+    c1->SetLineWidth(3);
     c1->Draw();
     TEllipse *c2 = new TEllipse(0,0,0.29, 0.29);
-    c2->SetLineColor(kRed+3);
+    c2->SetLineColor(kGreen+2);
+    c2->SetLineWidth(3);
     c2->Draw("same");
     TEllipse *c3 = new TEllipse(0,0,0.23, 0.23);
     c3->SetLineColor(kRed+3);
+    //c3->SetLineWidth(2);
     c3->Draw("same");
 
 
@@ -182,6 +185,7 @@ void polar_cut(int Event){
     // Legend
     auto legend = new TLegend();
     legend->SetHeader("Legend","C");
+    legend->AddEntry(c1, "Detector Pixel Layer", "L");
     legend->AddEntry(grP1, "Detector Hits", "P");
     legend->AddEntry(line_pos, "Trace (z>0)", "L");
     legend->AddEntry(line_neg, "Trace (z<0)", "L");
